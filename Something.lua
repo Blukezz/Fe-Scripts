@@ -495,6 +495,12 @@ for _, v in pairs(PASettings.HatsBeingAnimated) do
     Controller.Parent = Handle
     Controller.Part1 = Handle
     Controller.Part0 = Character[string.split(v, "\\\\")[2]]
+    Controller.C0.Position.X = "2.3"
+    Controller.C0.Position.Y = "1.4"
+    Controller.C0.Position.Z = "0"
+    Controller.C0.Orientation.X = "25"
+    Controller.C0.Orientation.Y = "5"
+    Controller.C0.Orientation.Z = "155"
 end
 
 
