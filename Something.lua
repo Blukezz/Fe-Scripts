@@ -532,15 +532,6 @@ while task.wait() do
         PlayAnimation(PASettings.Animations.WalkAnimation.AnimationID, PASettings.Animations.WalkAnimation.FrameSpeed, PASettings.Animations.WalkAnimation.TweenSpeed, "Running")
  
     end
-
-Controler.C0.Position.X = "2.3"
-Controler.C0.Position.Y = "1.4"
-Controler.C0.Position.Z = "0"
-
-Controler.C0.Orientation.X = "25"
-Controler.C0.Orientation.Y = "5"
-Controler.C0.Orientation.Z = "155"
-		
 end
 end
 return Methods
