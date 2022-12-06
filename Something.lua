@@ -1,15 +1,17 @@
 --//====================================================\\--
---||               ONLY 90s KIDS REMEMBER
---||              ABYSS EYE BY SHACKLUSTER
+--||               ONLY 90s KIDS REMEMBER                ||--
+--||              ABYSS EYE BY SHACKLUSTER               ||--
 --\\====================================================//--
 
-wait(0.2)
+print("> Running Abyss Eye by Shackluster")
+Game:GetService("Players").LocalPlayer.Character.Dummy.Dummy.Humanoid.Jump = true
+wait(0.5)
 
 Player = game:GetService("Players").LocalPlayer
 PlayerGui = Player.PlayerGui
 Cam = workspace.CurrentCamera
 Backpack = Player.Backpack
-Character = Player.Character
+Character = Player.Character.Dummy.Dummy
 Humanoid = Character.Humanoid
 Mouse = Player:GetMouse()
 RootPart = Character["HumanoidRootPart"]
@@ -54,7 +56,7 @@ local ROOTC0 = CF(0, 0, 0) * ANGLES(RAD(-90), RAD(0), RAD(180))
 local NECKC0 = CF(0, 1, 0) * ANGLES(RAD(-90), RAD(0), RAD(180))
 local RIGHTSHOULDERC0 = CF(-0.5, 0, 0) * ANGLES(RAD(0), RAD(90), RAD(0))
 local LEFTSHOULDERC0 = CF(0.5, 0, 0) * ANGLES(RAD(0), RAD(-90), RAD(0))
-local DAMAGEMULTIPLIER = 1
+local DAMAGEMULTIPLIER = 0
 local ANIM = "Idle"
 local ATTACK = false
 local EQUIPPED = false
@@ -527,45 +529,7 @@ function MagicRing()
 end
 
 function CharacterFade(COLOR,TIMER,MOVEDIRECTION,PARENT)
-	coroutine.resume(coroutine.create(function()
-		local FADE = IT("Model",Effects)
-		if PARENT ~= nil then
-			FADE.Parent = PARENT
-		end
-		FADE.Name = "FadingEffect"
-		for _, c in pairs(Character:GetChildren()) do
-			if c.ClassName == "Part" then
-				c.CanCollide = false
-				local FADER = CreatePart(3, FADE, "Neon", 0, 0.75, BRICKC("Pearl"), c.Name, c.Size, true)
-				FADER.CFrame = c.CFrame
-				FADER.Color = COLOR
-				if FADER.Name == "Head" then
-					Head:FindFirstChildOfClass("SpecialMesh"):Clone().Parent = FADER
-				elseif FADER.Name == "HumanoidRootPart" then
-					FADE.PrimaryPart = FADER
-					FADER.Transparency = 1
-				end
-			end
-		end
-		local TRANS = 0.25/TIMER
-		local DIST = nil
-		if MOVEDIRECTION ~= nil then
-			DIST = (FADE.PrimaryPart.Position - MOVEDIRECTION).Magnitude
-		end
-		for i = 1, TIMER do
-			Swait()
-			for _, c in pairs(FADE:GetChildren()) do
-				if c.ClassName == "Part" then
-					c.Transparency = c.Transparency + TRANS
-				end
-			end
-			if MOVEDIRECTION ~= nil then
-				local ORI = FADE.PrimaryPart.Orientation
-				FADE:SetPrimaryPartCFrame(CF(CF(FADE.PrimaryPart.Position,MOVEDIRECTION)*CF(0,0,-DIST/TIMER).p) * ANGLES(RAD(ORI.X), RAD(ORI.Y), RAD(ORI.Z)))
-			end
-		end
-		FADE:remove()
-	end))
+
 end
 
 --//=================================\\
@@ -632,8 +596,8 @@ end))
 function ApplyDamage(Humanoid,Damage)
 	Damage = Damage * DAMAGEMULTIPLIER
 	if Humanoid.Health < 2000 then
-		if Humanoid.Health - Damage > 0 then
-			Humanoid.Health = Humanoid.Health - Damage
+		if Humanoid.Health > 0 then
+			Humanoid.Health = Humanoid.Health
 		else
 			Humanoid.Parent:BreakJoints()
 		end
@@ -654,7 +618,7 @@ function ApplyAoE(POSITION,RANGE,MINDMG,MAXDMG,FLING,INSTAKILL)
 							CHILD:BreakJoints()
 						else
 							local DMG = MRANDOM(MINDMG,MAXDMG)
-							ApplyDamage(HUM,DMG)
+							
 						end
 						if FLING > 0 then
 							for _, c in pairs(CHILD:GetChildren()) do
@@ -698,7 +662,7 @@ function Melee()
 					end
 					table.insert(HITS,hit.Parent)
 						if PASS == true then
-						ApplyDamage(HUM,MRANDOM(15,25))
+						
 					end
 				end
 			end
@@ -823,6 +787,49 @@ function AbyssalShriek()
 		Rooted = false
 	end
 end
+
+--// Credits to Mizt for this AMAZING alignment script :> //--
+local alignchar = game:GetService("Players").LocalPlayer.Character
+local hhat = alignchar['BladeMasterAccessory']
+
+local Count = 1
+function AlignCharacter(Part0,Part1,Position,Angle)
+    local AlignPos = Instance.new('AlignPosition', Part1); AlignPos.Name = "AliP_"..Count
+    AlignPos.ApplyAtCenterOfMass = true;
+    AlignPos.MaxForce = 5772000--67752;
+    AlignPos.MaxVelocity = math.huge/9e110;
+    AlignPos.ReactionForceEnabled = false;
+    AlignPos.Responsiveness = 200;
+    AlignPos.RigidityEnabled = false;
+    local AlignOri = Instance.new('AlignOrientation', Part1); AlignOri.Name = "AliO_"..Count
+    AlignOri.MaxAngularVelocity = math.huge/9e110;
+    AlignOri.MaxTorque = 5772000
+    AlignOri.PrimaryAxisOnly = false;
+    AlignOri.ReactionTorqueEnabled = false;
+    AlignOri.Responsiveness = 200;
+    AlignOri.RigidityEnabled = false;
+    local AttachmentA=Instance.new('Attachment',Part1); AttachmentA.Name = "AthP_"..Count
+    local AttachmentB=Instance.new('Attachment',Part0); AttachmentB.Name = "AthP_"..Count
+    local AttachmentC=Instance.new('Attachment',Part1); AttachmentC.Name = "AthO_"..Count
+    local AttachmentD=Instance.new('Attachment',Part0); AttachmentD.Name = "AthO_"..Count
+    AttachmentC.Orientation = Angle
+    AttachmentA.Position = Position
+    AlignPos.Attachment1 = AttachmentA;
+    AlignPos.Attachment0 = AttachmentB;
+    AlignOri.Attachment1 = AttachmentC;
+    AlignOri.Attachment0 = AttachmentD;
+    Count = Count + 1
+end
+
+hhat.Handle.AccessoryWeld:Destroy()
+AlignCharacter(hhat.Handle,Character.Effects.Abyssal_Sword,Vector3.new(0,-1,0),Vector3.new(0,0,-135))
+
+for _,v in pairs(Character.Effects:GetChildren()) do
+	if v:IsA("BasePart") then
+		v.Transparency = 1
+	end
+end
+
 function AbyssalDash()
 	ATTACK = true
 	Rooted = true
@@ -863,8 +870,8 @@ function AbyssalDash()
 								end
 							end
 							if PASS == true then
-								local DMG = MRANDOM(25,45)
-								ApplyDamage(HUM,DMG)
+								local DMG = MRANDOM(0,0)
+								
 								table.insert(HITS,CHILD)
 							end
 						end
@@ -1079,7 +1086,7 @@ function BlackBlast()
 	end
 end
 function NightmareFall()
-	if ANIM ~= "Fall" and ANIM ~= "Jump" and DAMAGEMULTIPLIER == 1 then
+	if ANIM ~= "Fall" and ANIM ~= "Jump" and DAMAGEMULTIPLIER == 0 then
 		ATTACK = true
 		Rooted = true
 		EQUIPPED = true
@@ -1264,8 +1271,8 @@ function NightmareFall()
 					for E = 1, #HUMS do
 						if HUMS[E] then
 							if HUMS[E].Health > 0 then
-								HUMS[E].Health = HUMS[E].Health - 0.3
-								DAMAGEMULTIPLIER = DAMAGEMULTIPLIER + 0.0025
+								HUMS[E].Health = HUMS[E].Health - 0
+								DAMAGEMULTIPLIER = DAMAGEMULTIPLIER + 0
 								WACKYEFFECT({Time = 10, EffectType = "Round Slash", Size = VT(0,0,0), Size2 = VT(1.5,0,1.5)/20, Transparency = 0.9, Transparency2 = 1, CFrame = CF(Torso.Position) * ANGLES(RAD(MRANDOM(0,360)), RAD(MRANDOM(0,360)), RAD(MRANDOM(0,360))), MoveToPos = nil, RotationX = 0, RotationY = 0, RotationZ = 0, Material = "Neon", Color = C3(0,0,0), SoundID = nil, SoundPitch = nil, SoundVolume = nil, UseBoomerangMath = true, Boomerang = 0, SizeBoomerang = 10})
 							end
 						end
@@ -1415,7 +1422,6 @@ end)
 
 while true do
 	Swait()
-	script.Parent = WEAPONGUI
 	ANIMATE.Parent = nil
 	for _,v in next, Humanoid:GetPlayingAnimationTracks() do
 	    v:Stop();
@@ -1498,7 +1504,6 @@ while true do
 	if Head:FindFirstChild("face") then
 		Head:FindFirstChild("face"):remove()
 	end
-	Humanoid.Name = "NONHUM"
 	Humanoid.MaxHealth = 1e3
 	Humanoid.Health = 1e3
 end
